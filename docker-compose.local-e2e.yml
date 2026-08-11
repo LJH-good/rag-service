@@ -1,0 +1,22 @@
+# 로컬 E2E용 — LangChain Service만 컨테이너로 띄운다.
+# Qdrant는 원격 인스턴스에 붙음 (docker-compose.local-e2e.env에서 QDRANT_URL 설정).
+# 사용 전: Docker Desktop을 켠 뒤 프로젝트 루트에서
+#   docker compose -f docker-compose.local-e2e.yml up -d
+services:
+  langchain-service:
+    build:
+      context: ../langchain-service
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - docker-compose.local-e2e.env
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 20s

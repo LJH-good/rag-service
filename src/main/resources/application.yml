@@ -1,0 +1,82 @@
+# 공통 기본값 — profile(local-api, dev-api 등)에서 덮어씀
+spring:
+  jackson:
+    time-zone: Asia/Seoul
+  servlet:
+    multipart:
+      # transport 한도는 여유를 둠(멀티파트 오버헤드 포함). 실질 파일 크기 판정은
+      # rag.upload.max-file-size-bytes(validateFileSize)에서 하고, 그래야 초과 시
+      # Spring 413이 아니라 명확한 BAD_REQUEST_FILE_SIZE_EXCEEDED(400)로 응답된다.
+      max-file-size: 30MB
+      max-request-size: 30MB
+
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: health,prometheus
+  endpoint:
+    health:
+      show-details: never
+    prometheus:
+      enabled: true
+
+rag:
+  categories:
+    personal-category-id: ${RAG_PERSONAL_CATEGORY_ID:}
+
+  langchain-service:
+    enabled: false
+    base-url: ""
+    timeout-ms: 120000
+    max-in-memory-size-bytes: 10485760
+
+  qa:
+    langchain-path: /api/rag/{aiServiceName}/qa
+
+  pcc:
+    langchain-enabled: false
+    base-url: ""
+    invoke-path: /api/internal/rag/pcc/ingest
+    presign-expiry-seconds: 3600
+    timeout-ms: 120000
+    max-in-memory-size-bytes: 33554432
+
+  upload:
+    max-file-size-bytes: 20971520
+
+  purge:
+    enabled: false
+    retention-days: 100
+    cron: "0 0 3 * * *"
+
+  scheduler:
+    retry:
+      enabled: false
+
+  worker:
+    delay-ms: 1000
+    max-retry: 3
+    retry-delay-ms: 5000
+    retry-backoff-seconds: 60
+    chunk-page-size: 500
+    embed-lines-per-part: 5000
+    embed-batch-size: 4
+    embed-inter-batch-delay-ms: 1000
+    stuck-job-timeout-minutes: 15
+    reindex-policy: OVERWRITE
+    ensure-collection: true
+
+  chunk:
+    # mode: FIXED(기본) | SEMANTIC
+    # SEMANTIC으로 바꿀 때는 max-chars를 4000 이상으로 올릴 것.
+    # max-chars의 역할이 "품질 튜닝값"에서 "임베딩 모델 토큰 한도 하드 캡"으로 바뀐다.
+    mode: SEMANTIC
+    max-chars: 1200
+    overlap-chars: 120
+    min-chars: 40
+
+  embedding:
+    dimension: 1536
+    provider: ai-service

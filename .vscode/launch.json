@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "RagWorker API (dev-api)",
+      "request": "launch",
+      "mainClass": "com.init.worker.RagWorkerServiceApplication",
+      "projectName": "rag-storage-service",
+      "args": "--spring.profiles.active=dev-api"
+    },
+    {
+      "type": "java",
+      "name": "RagWorker Consumer (dev-consumer)",
+      "request": "launch",
+      "mainClass": "com.init.worker.RagWorkerServiceApplication",
+      "projectName": "rag-storage-service",
+      "args": "--spring.profiles.active=dev-consumer"
+    }
+  ]
+}
