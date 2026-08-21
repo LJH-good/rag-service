@@ -40,7 +40,7 @@ rag:
   env: local
 
   categories:
-    personal-category-id: ${RAG_PERSONAL_CATEGORY_ID:61911ccb-8733-4b2b-9476-25d2347605a9}
+    personal-category-id: ${RAG_PERSONAL_CATEGORY_ID}
 
   app:
     role: api

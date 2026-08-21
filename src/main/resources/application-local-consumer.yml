@@ -32,10 +32,11 @@ spring:
           time_zone: Asia/Seoul
   data:
     redis:
-      host: ${REDIS_HOST}
-      port: ${REDIS_PORT}
-      database: ${REDIS_DATABASE}
-      password: ${REDIS_PASSWORD}
+      # 개인용 로컬 Redis (docker: langchain-redis-local, 비밀번호 없음)
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      database: ${REDIS_DATABASE:0}
+      password: ${REDIS_PASSWORD:}
       repositories:
         enabled: false
       timeout: 20s
