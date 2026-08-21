@@ -51,7 +51,7 @@ $env:RAG_PCC_BENCH_OBJECT_URL_TEMPLATE = "https://your-minio-or-cdn/bench/{ext}/
 # 선택: $env:RAG_PCC_BENCH_PATH, $env:RAG_PCC_BENCH_EXTS
 
 Set-Location <rag-storage-service 루트>
-.\gradlew.bat test --tests "com.init.worker.langchain.PccLangchainBenchmarkTest"
+.\gradlew.bat test --tests "com.ragservice.worker.langchain.PccLangchainBenchmarkTest"
 ```
 
 - `{ext}`, `{file}` 치환: 예) `bench/pdf/1mb_text.pdf` 로 GET 가능해야 함.
