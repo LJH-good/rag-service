@@ -1,7 +1,8 @@
 package com.ragservice.worker;
 
-import org.springframework.boot.SpringApplication;
+import me.paulschwarz.springdotenv.spring.DotenvApplicationInitializer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -16,6 +17,8 @@ public class RagWorkerServiceApplication {
 
     public static void main(String[] args) {
         TimeZone.setDefault(TimeZone.getTimeZone(DEFAULT_TIME_ZONE));
-        SpringApplication.run(RagWorkerServiceApplication.class, args);
+        new SpringApplicationBuilder(RagWorkerServiceApplication.class)
+                .initializers(new DotenvApplicationInitializer())
+                .run(args);
     }
 }
